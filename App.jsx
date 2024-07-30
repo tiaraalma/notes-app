@@ -2,7 +2,9 @@ import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
+import { Provider } from "react-redux";
 
+import { store } from "./src/redux/store";
 import colors from "./src/themes/colors";
 import NoteListScreen from "./src/screens/NoteListScreen";
 import AddNoteScreen from "./src/screens/AddNoteScreen";
@@ -11,7 +13,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <Provider store={store}>
       <NavigationContainer
         theme={{ colors: { backgroundColor: colors.textColors.white } }}
       >
@@ -53,6 +55,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </Provider>
   );
 }
