@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,20 +10,21 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import { fetchNotes, deleteNote } from "../redux/noteSlice";
 import colors from "../themes/colors";
+import { fetchNotes, deleteNote } from "../redux/noteSlice";
 
 const NoteListScreen = () => {
   const notes = useSelector((state) => state.notes);
   const dispatch = useDispatch();
+  console.log(notes);
 
-  const deleteHandler = (id) => {
-    dispatch(deleteNote(id));
-  };
+  useEffect (() => {
+    dispatch(fetchNotes())
+  }, [])
 
-  useEffect(() => {
-    dispatch(fetchNotes());
-  }, []);
+  const deleteHandler = (noteId) => {
+    dispatch(deleteNote(noteId))
+  }
 
   const noteRender = (item) => {
     return (
@@ -37,10 +38,7 @@ const NoteListScreen = () => {
               "Deleting this note will permanently remove it from your account.",
               [
                 { style: "cancel", text: "Cancel", onPress: () => {} },
-                {
-                  text: "OK",
-                  onPress: () => deleteHandler(item.id),
-                },
+                { text: "OK", onPress: () => deleteHandler(item.id) },
               ]
             )
           }

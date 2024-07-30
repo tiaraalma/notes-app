@@ -6,9 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../themes/colors";
+import { useDispatch } from "react-redux";
 import { addNote, fetchNotes } from "../redux/noteSlice";
 
 const AddNoteScreen = () => {
@@ -17,8 +17,8 @@ const AddNoteScreen = () => {
   const dispatch = useDispatch();
 
   const addHandler = () => {
+    dispatch (fetchNotes());
     dispatch(addNote(content));
-    dispatch(fetchNotes());
     navigation.goBack();
   };
 

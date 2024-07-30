@@ -1,51 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  getFirestore,
-  addDoc,
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
-import app from "../../firebaseConfig";
+import { getFirestore, addDoc, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import app from '../../firebaseConfig';
 
 const db = getFirestore(app);
 
-export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
+export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
   const querySnapshot = await getDocs(collection(db, "notes"));
-  const notes = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
+  const notes = querySnapshot.docs.map(doc => ({ 
+      id: doc.id,
+      ...doc.data(), 
   }));
   return notes;
 });
 
-export const addNote = createAsyncThunk(
-  "notes/addNote",
-  async (content, {}) => {
-    await addDoc(collection(db, "notes"), { content });
-    return null;
-  }
-);
+// Thunk untuk menambahkan catatan baru ke Firestore
+export const addNote = createAsyncThunk('notes/addNote', async (content, {}) => {
+  await addDoc(collection(db, "notes"), {content});
+  dispatch(fetchNotes());
+  return null;
+});
 
-export const deleteNote = createAsyncThunk(
-  "notes/deleteNote",
-  async (id, { dispatch }) => {
-    await deleteDoc(doc(collection(db, "notes"), id));
-    dispatch(fetchNotes());
-    return null;
-  }
-);
+// Thunk untuk menghapus catatan dari Firestore
+export const deleteNote = createAsyncThunk('notes/deleteNote', async (noteId, { dispatch }) => {
+  await deleteDoc(doc(collection(db, "notes"), noteId));
+  dispatch(fetchNotes());
+  return null;
+});
 
 const noteSlice = createSlice({
   name: "notes",
   initialState: [],
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchNotes.fulfilled, (_, action) => action.payload)
-      .addCase(addNote.fulfilled, (state, _) => state);
-  },
+  builder
+  .addCase(fetchNotes.fulfilled, (state, action) => action.payload)
+  .addCase(addNote.fulfilled, (state, action) => state)
+  .addCase(deleteNote.fulfilled, (state, action) => state)
+}
 });
 
 export default noteSlice.reducer;

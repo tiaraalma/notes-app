@@ -1,19 +1,14 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDoHk2C1PJvHlqcR4PzG0fFXJ3MhI02aBY",
-  authDomain: "goran-notes.firebaseapp.com",
-  projectId: "goran-notes",
-  storageBucket: "goran-notes.appspot.com",
-  messagingSenderId: "1048790374912",
-  appId: "1:1048790374912:web:7374dd58c2f21b171916e5",
+  apiKey: "AIzaSyCOYKRnw0K6HTD-_coxmxypsPp9X7l_g3s",
+  authDomain: "notesapps-3c2db.firebaseapp.com",
+  projectId: "notesapps-3c2db",
+  storageBucket: "notesapps-3c2db.appspot.com",
+  messagingSenderId: "209891331726",
+  appId: "1:209891331726:web:0a35bbef5ff337c51e03df"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export default app;
